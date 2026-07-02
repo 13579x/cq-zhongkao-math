@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>重庆中考数学 2021—2026 六年考情分析</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<script>window.echarts||document.write('<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"><\/script>')</script>
+<style>
+  :root{
+    --primary:#4f46e5; --primary2:#7c3aed; --cyan:#0891b2; --rose:#e11d48;
+    --amber:#d97706; --green:#059669; --ink:#1e293b; --muted:#64748b;
+    --bg:#f1f4fa; --card:#ffffff; --line:#e2e8f0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.7}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px 60px}
+
+  /* ---------- header ---------- */
+  header{background:linear-gradient(135deg,#312e81 0%,#4f46e5 55%,#7c3aed 100%);color:#fff;padding:52px 20px 92px;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;right:-80px;top:-80px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.07)}
+  header::before{content:"";position:absolute;left:-60px;bottom:-120px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.05)}
+  .hd-in{max-width:1180px;margin:0 auto;position:relative;z-index:2}
+  .hd-tag{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:4px 16px;font-size:13px;letter-spacing:2px;margin-bottom:18px}
+  h1{font-size:34px;font-weight:700;letter-spacing:1px}
+  .hd-sub{margin-top:12px;font-size:15px;opacity:.85;max-width:800px}
+
+  /* ---------- KPI ---------- */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:-52px;position:relative;z-index:3}
+  .kpi{background:var(--card);border-radius:14px;padding:18px 20px;box-shadow:0 6px 18px rgba(30,41,59,.08);border-top:3px solid var(--primary)}
+  .kpi b{display:block;font-size:26px;color:var(--primary);font-weight:700;line-height:1.2}
+  .kpi span{font-size:13px;color:var(--muted)}
+  .kpi:nth-child(2){border-top-color:var(--cyan)} .kpi:nth-child(2) b{color:var(--cyan)}
+  .kpi:nth-child(3){border-top-color:var(--green)} .kpi:nth-child(3) b{color:var(--green)}
+  .kpi:nth-child(4){border-top-color:var(--rose)} .kpi:nth-child(4) b{color:var(--rose)}
+  .kpi:nth-child(5){border-top-color:var(--amber)} .kpi:nth-child(5) b{color:var(--amber)}
+  .kpi:nth-child(6){border-top-color:var(--primary2)} .kpi:nth-child(6) b{color:var(--primary2)}
+
+  /* ---------- section ---------- */
+  section{margin-top:46px}
+  .sec-t{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+  .sec-t h2{font-size:22px;font-weight:700;padding-left:14px;border-left:5px solid var(--primary);line-height:1.3}
+  .sec-t.hot h2{border-left-color:var(--rose)}
+  .sec-t small{color:var(--muted);font-size:13px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:860px){.grid2{grid-template-columns:1fr}}
+  .card{background:var(--card);border-radius:14px;box-shadow:0 4px 14px rgba(30,41,59,.06);padding:20px 22px}
+  .card h3{font-size:15.5px;margin-bottom:4px;color:var(--ink)}
+  .card .hint{font-size:12.5px;color:var(--muted);margin-bottom:8px}
+  .chart{width:100%;height:360px}
+  .chart.tall{height:430px}
+  .chart.xtall{height:520px}
+
+  /* ---------- callout ---------- */
+  .callout{border-left:4px solid var(--rose);background:#fff1f2;border-radius:0 12px 12px 0;padding:14px 18px;font-size:14px;margin-top:16px}
+  .callout.blue{border-color:var(--primary);background:#eef2ff}
+  .callout b{color:var(--rose)} .callout.blue b{color:var(--primary)}
+
+  /* ---------- tables ---------- */
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{background:#eef2ff;color:#3730a3;font-weight:600;padding:9px 10px;text-align:left;white-space:nowrap}
+  td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:hover td{background:#f8fafc}
+  .tbl-scroll{overflow-x:auto}
+  .tag{display:inline-block;font-size:11.5px;border-radius:999px;padding:1px 9px;margin-left:6px;white-space:nowrap}
+  .tag.red{background:#ffe4e6;color:#be123c}
+  .tag.amber{background:#fef3c7;color:#b45309}
+  .tag.blue{background:#e0e7ff;color:#4338ca}
+  .tag.green{background:#d1fae5;color:#047857}
+  .tag.cyan{background:#cffafe;color:#0e7490}
+
+  /* ---------- tabs ---------- */
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .tab-btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 20px;font-size:14px;cursor:pointer;color:var(--muted);transition:.15s}
+  .tab-btn.on{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:600}
+  .tab-panel{display:none}
+  .tab-panel.on{display:block}
+
+  /* ---------- timeline ---------- */
+  .timeline{position:relative;margin-left:8px;padding-left:26px}
+  .timeline::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(#4f46e5,#7c3aed)}
+  .tl-item{position:relative;margin-bottom:18px}
+  .tl-item::before{content:"";position:absolute;left:-26px;top:7px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--primary)}
+  .tl-item h4{font-size:15px;color:var(--primary);margin-bottom:2px}
+  .tl-item p{font-size:13.5px;color:#475569}
+
+  /* ---------- 2026 section ---------- */
+  .band{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:16px}
+  .band .card{border-top:4px solid var(--primary)}
+  .band .card.b1{border-top-color:var(--green)}
+  .band .card.b2{border-top-color:var(--amber)}
+  .band .card.b3{border-top-color:var(--cyan)}
+  .band .card.b4{border-top-color:var(--rose)}
+  .band h3{font-size:15.5px}
+  .band .pts{color:var(--muted);font-size:12.5px;margin-bottom:8px}
+  .band ul{margin:4px 0 0 18px;font-size:13.5px;color:#334155}
+  .band li{margin-bottom:6px}
+
+  /* ---------- advice ---------- */
+  .adv{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .adv .card{border-top:4px solid var(--green);position:relative}
+  .adv .card.a2{border-top-color:var(--amber)} .adv .card.a3{border-top-color:var(--rose)} .adv .card.a4{border-top-color:var(--cyan)}
+  .adv h3{font-size:16px}
+  .adv .pts{color:var(--muted);font-size:12.5px;margin-bottom:10px}
+  .adv ul{margin:6px 0 0 18px;font-size:13.5px;color:#334155}
+  .adv li{margin-bottom:6px}
+  .adv li b{color:var(--ink)}
+
+  footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+  footer a{color:var(--primary);text-decoration:none}
+  .nojs{padding:30px;text-align:center;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd-in">
+    <span class="hd-tag">六 年 真 题 · 逐 题 统 计 · 2026 重 点 解 读</span>
+    <h1>重庆中考数学 2021—2026 考情分析</h1>
+    <p class="hd-sub">基于 2021—2024 年 A 卷、2025—2026 年全市统一卷共 6 套真题、153 道题逐题标注考点后统计生成（2026 年真题来自原卷 PDF）。2025 年起重庆中考取消 A/B 卷统一命题，命题导向"反套路、反机械刷题"，2026 年卷在结构不变的前提下完成了一轮明显的"考点换脸"。</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- KPI -->
+  <div class="kpis">
+    <div class="kpi"><b>150 分</b><span>满分 · 120 分钟</span></div>
+    <div class="kpi"><b>25~26 题</b><span>题量稳定 · 选填每题 4 分</span></div>
+    <div class="kpi"><b>≈105 分</b><span>基础盘（送分题）分值</span></div>
+    <div class="kpi"><b>6 / 6 年</b><span>选择第 9 题都考正方形</span></div>
+    <div class="kpi"><b>0 次</b><span>圆六年从未出解答大题</span></div>
+    <div class="kpi"><b>33 道</b><span>六年实际情境题总数</span></div>
+  </div>
+
+  <!-- 一 结构演变 -->
+  <section>
+    <div class="sec-t"><h2>一、卷型结构演变</h2><small>2023、2025 两次调整后进入稳定期，2026 结构与 2025 完全一致</small></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>三大题型分值 &amp; 题量（2021—2026）</h3>
+        <div class="hint">柱：选择 / 填空 / 解答分值（堆叠）；折线：总题量</div>
+        <div id="c_struct" class="chart"></div>
+      </div>
+      <div class="card">
+        <h3>结构调整明细</h3>
+        <div class="tbl-scroll"><table>
+          <tr><th>年份</th><th>卷型</th><th>选择</th><th>填空</th><th>解答</th><th>关键变化</th></tr>
+          <tr><td>2021</td><td>A 卷</td><td>12×4</td><td>6×4</td><td>7×10＋1×8</td><td>几何压轴单列第四大题（8 分）</td></tr>
+          <tr><td>2022</td><td>A 卷</td><td>12×4</td><td>4×4</td><td>2×8＋7×10</td><td>作图题固定为"填空式证明"</td></tr>
+          <tr><td>2023</td><td>A 卷</td><td>10×4</td><td>8×4</td><td>1×8＋7×10</td><td>选择减 2 题；新定义移入填空压轴</td></tr>
+          <tr><td>2024</td><td>A 卷</td><td>10×4</td><td>8×4</td><td>1×8＋7×10</td><td>与 2023 同构；出现化学跨学科素材</td></tr>
+          <tr><td>2025</td><td>统一卷</td><td>10×4</td><td>6×4</td><td>2×8＋7×10</td><td>AB 合卷；不等式组单设 8 分题；删"含参不等式组＋分式方程"</td></tr>
+          <tr><td><b>2026</b></td><td><b>统一卷</b></td><td>10×4</td><td>6×4</td><td>2×8＋7×10</td><td><b>第 20 题首设「综合与实践」</b>（作图＋完整证明）；18 题化简求值降为 8 分；填空数论与圆双空对调位置</td></tr>
+        </table></div>
+        <div class="callout blue" style="margin-top:14px"><b>六年不变的骨架：</b>倒数第二大题永远是二次函数综合（10 分），最后一题永远是几何综合压轴（8~10 分）；选择、填空每题 4 分。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 二 模块分布 -->
+  <section>
+    <div class="sec-t"><h2>二、模块分值分布</h2><small>综合题按主要考查内容归入所属模块</small></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>三大领域分值走势</h3>
+        <div class="hint">数与代数稳居半壁江山；2023—2024 几何加重，2025—2026 回落</div>
+        <div id="c_domain" class="chart"></div>
+      </div>
+      <div class="card">
+        <h3>九大细分模块 × 年份 分值热力图</h3>
+        <div class="hint">颜色越深分值越高；注意"圆"一行六年恒为 8 分（只出小题）</div>
+        <div id="c_heat" class="chart tall"></div>
+      </div>
+    </div>
+    <div class="callout"><b>重庆特色：</b>圆六年 0 大题、每年仅 8 分选填，且 2024—2026 <b>连续三年</b>把"圆＋四边形求线段"设为<b>填空双空难题</b>，2026 年更是移到填空压轴位（第 16 题）——圆的复习重心应放在小题技巧（垂径定理设方程、切线性质、圆周角导角），而不是大题证明。</div>
+  </section>
+
+  <!-- 三 高频考点 -->
+  <section>
+    <div class="sec-t"><h2>三、高频考点排行</h2><small>按六年累计分值排序，标注出现年数</small></div>
+    <div class="card">
+      <h3>高频考点六年累计分值 TOP 22</h3>
+      <div class="hint">深紫 = 六年全考（6/6）；青色 = 五年考（5/6）；灰色 = 四年考（4/6）。悬停查看考法说明</div>
+      <div id="c_freq" class="chart xtall"></div>
+      <div class="callout" style="margin-top:10px"><b>反套路进行时：</b>"含参不等式组＋分式方程"2025—2026 连续两年缺席（确认退场）；<b>增长率、扇形阴影、相似小题 2026 年也集体轮空</b>。而绝对值方程组（2025/2026）、统计概念题（2025 抽样调查 / 2026 必然事件）连续两年出现，成为新的常客。</div>
+    </div>
+  </section>
+
+  <!-- 四 题位图谱 -->
+  <section>
+    <div class="sec-t"><h2>四、固定题位图谱与压轴模板</h2><small>重庆卷题位高度定型，可按"题位"组织复习</small></div>
+    <div class="card">
+      <h3>题位图谱（以 2025—2026 结构为准）</h3>
+      <div class="tbl-scroll"><table>
+        <tr><th>题位</th><th>固定内容</th><th>难度</th></tr>
+        <tr><td>选择 1—8</td><td>实数概念（相反数→2026 改倒数）、轴对称/三视图、反比例、规律探究、估算、方程情境（2026《九章算术》）、圆基础</td><td><span class="tag green">送分</span></td></tr>
+        <tr><td><b>选择 9</b></td><td><b>正方形综合，六年全考</b>：旋转全等(21)→角平分线(22)→半角(23)→旋转90°(24)→翻折(25)→垂直构造＋面积比(26)</td><td><span class="tag amber">中偏难</span></td></tr>
+        <tr><td><b>选择 10</b></td><td>代数新定义＋①②③多结论判断（<b>2024—2026 三连"整式计数"</b>）</td><td><span class="tag red">较难</span></td></tr>
+        <tr><td>填空前段</td><td>概率、平行线角度、估算（2026 开放式"写一个即可"）、绝对值方程组（2025/2026 连考）</td><td><span class="tag green">送分＋1 难</span></td></tr>
+        <tr><td>填空双难位</td><td>①数论双空（2026 去掉"××数"包装、前移至第 15 题）②圆的综合双空（2024—2026 三连，2026 居压轴位第 16 题）</td><td><span class="tag red">压轴</span></td></tr>
+        <tr><td>解答 17/18</td><td>解不等式组（8 分，2025—2026 连考）＋化简求值（2026 降为 8 分）</td><td><span class="tag green">送分</span></td></tr>
+        <tr><td>作图题位</td><td>尺规作图＋证明（<b>2026 升级为「综合与实践」：动手操作→问题提出→问题解决，完整证明不再挖空</b>）</td><td><span class="tag blue">中等</span></td></tr>
+        <tr><td>统计大题</td><td>求统计量 → 样本估计总体（两组合并）→ 决策说理，六年模板不变</td><td><span class="tag green">基础</span></td></tr>
+        <tr><td>方程应用</td><td>(1) 一次方程 / 二元一次方程组 →(2) 分式方程（记得检验），六年模板不变</td><td><span class="tag blue">中等</span></td></tr>
+        <tr><td>函数探究</td><td>动点建模 → 画图象 → 图象法解不等式（误差≤0.2），2023—2026 四连（2026 为反比例＋分段一次）</td><td><span class="tag amber">中偏难</span></td></tr>
+        <tr><td>解直角应用</td><td>方向角拆双直角三角形 →(2) 动态建模（2025 相遇 / 2026 距离方程），连续两年动态化</td><td><span class="tag amber">中偏难</span></td></tr>
+        <tr><td><b>第 24 题</b></td><td>二次函数综合压轴（模板见下）</td><td><span class="tag red">压轴</span></td></tr>
+        <tr><td><b>第 25 题</b></td><td>几何综合压轴（模板见下）</td><td><span class="tag red">压轴</span></td></tr>
+      </table></div>
+    </div>
+
+    <div class="grid2" style="margin-top:18px">
+      <div class="card">
+        <h3>二次函数压轴六年对照（10 分）</h3>
+        <div class="tbl-scroll"><table>
+          <tr><th>年</th><th>(2) 最值问</th><th>(3) 平移＋存在性</th></tr>
+          <tr><td>21</td><td>△PDE 周长最大（铅垂法）</td><td>平移顶点 → 平行四边形</td></tr>
+          <tr><td>22</td><td>水平＋竖直线段和最大</td><td>左移 5 单位 → 平行四边形</td></tr>
+          <tr><td>23</td><td>△PDE 周长最大</td><td>沿射线平移 √5 → 菱形</td></tr>
+          <tr><td>24</td><td>PD 最大 ＋ 三折线 AM+MN+NF 最小</td><td>沿射线平移 → 等角 ∠QDK=∠ACB</td></tr>
+          <tr><td>25</td><td>比值 PQ/OQ 最大 ＋ 定长下 BD+PE 最小</td><td>沿射线平移 2√2 → 等角（差 45°）</td></tr>
+          <tr><td><b>26</b></td><td>PD 最大 ＋ <b>胡不归 PE＋(√2/2)AE 最小</b></td><td>沿射线 CA 平移 √2 → <b>等角</b> ∠ANB=∠ACB−90°</td></tr>
+        </table></div>
+        <div class="callout" style="margin-top:12px">(2) 问已固化为"先定点、再复合最值"，折线家族考完了将军饮马、造桥选址、三折线，<b>2026 补上胡不归</b>；(3) 问"沿射线平移 k√2 ＋ 等角"<b>三连</b>（2024—2026），等角已成新常态。</div>
+      </div>
+      <div class="card">
+        <h3>几何压轴六年对照（8~10 分）</h3>
+        <div class="tbl-scroll"><table>
+          <tr><th>年</th><th>母体</th><th>核心方法链</th></tr>
+          <tr><td>21</td><td>等腰＋旋转</td><td>旋转全等 → 中点倍长中线 → 求比值</td></tr>
+          <tr><td>22</td><td>60° 双动点</td><td>截长补短 → 倍长中线 → 定角隐圆＋双翻折</td></tr>
+          <tr><td>23</td><td>Rt△＋等边</td><td>垂线段最短 → 中点轨迹隐圆 → 二次翻折</td></tr>
+          <tr><td>24</td><td>等腰＋轴对称</td><td>导角 → 构造全等 → 等腰分类讨论</td></tr>
+          <tr><td>25</td><td>等腰 120°＋旋转 60°</td><td>手拉手全等 → 中点构造 → 隐圆双最值＋翻折</td></tr>
+          <tr><td><b>26</b></td><td>Rt△＋等腰直角</td><td>旋转 90° 手拉手 → 中点构造证 BC−AC=√2GH → <b>直线轨迹（瓜豆）</b>＋AQ+DQ 最小＋翻折求面积最大</td></tr>
+        </table></div>
+        <div class="callout" style="margin-top:12px">母体永远是<b>等腰系三角形</b>（等腰/等边/等腰直角）；(2) 问集中在手拉手全等、倍长中线、中点构造；(3) 问的轨迹思想从<b>隐圆</b>（22/23/25）扩展到 <b>2026 的主从联动直线</b>，末问均为"直接写出"。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 五 难度与情境 -->
+  <section>
+    <div class="sec-t"><h2>五、难度结构与情境主题</h2><small>难度约 7 : 2 : 1；情境题每卷 4~7 道</small></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>难度分值结构（约 7:2:1）</h3>
+        <div class="hint">基础盘要求限时零失误；难题集中在 4 个填空空＋2 个压轴末问</div>
+        <div id="c_diff" class="chart"></div>
+      </div>
+      <div class="card">
+        <h3>六年 33 道情境题主题分布</h3>
+        <div class="hint">各年情境题数 2021→2026：5 / 6 / 4 / 7 / 5 / 6；2026 新增数学文化（《九章算术》）与时事（马拉松、春秋假）</div>
+        <div id="c_ctx" class="chart"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 六 趋势 -->
+  <section>
+    <div class="sec-t"><h2>六、六年命题趋势</h2><small>结构瘦身 · 反套路 · 素养导向</small></div>
+    <div class="card">
+      <div class="timeline">
+        <div class="tl-item"><h4>2026：反套路落到实处，"综合与实践"落地</h4><p>结构一字未动，但第 1 题相反数换倒数、数论题去名称化并换位、增长率/扇形/相似集体轮空、作图题升级为含完整证明的「综合与实践」、《九章算术》数学文化入题、压轴引入胡不归与直线轨迹——"背题位"策略失效速度明显加快。</p></div>
+        <div class="tl-item"><h4>结构持续瘦身，2025 是分水岭</h4><p>AB 合卷统一命题；删除"含参不等式组＋分式方程"经典题位（2025—2026 连续缺席，确认退场）；官方明确"反机械刷题"。备考应以 2025、2026 两卷为风格基准。</p></div>
+        <div class="tl-item"><h4>新定义题双题位固化，合计 8 分</h4><p>选择第 10 题"整式计数"2024—2026 三连；填空数论双空六年不断（合和数→勾股和数→递减数→方减数→十全数→2026 无名称直接给条件），是 140 分以上的分水岭。</p></div>
+        <div class="tl-item"><h4>函数探究与解直角"动态化"</h4><p>动点建模函数探究 2023—2026 四连；解直角应用 (2) 问连续两年动态建模（2025 相遇、2026 两人距离方程），静态"比较线路"已成过去式。</p></div>
+        <div class="tl-item"><h4>压轴内部升级：复合最值 ＋ 等角 ＋ 轨迹</h4><p>代数压轴 (2) 问复合最值化（三折线→定长平移→胡不归）、(3) 问"沿射线平移＋等角"三连；几何压轴轨迹思想从隐圆扩展到直线，翻折叠加双最值成为末问标配。</p></div>
+        <div class="tl-item"><h4>情境化与跨学科、数学文化</h4><p>每卷 4~7 道情境题：科技强国（无人机、航天、智能机器人）、民生经济、体育时事（2026 重庆马拉松、春秋假）、本土文化（桥都）；化学跨学科隔年出现（2024 烷烃、2026 醇类）；2026《九章算术》开数学文化入题先例。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 七 2026重点分析与2027预测 -->
+  <section>
+    <div class="sec-t hot"><h2>七、2026 年卷重点分析 ＆ 2027 预测</h2><small>结构稳定期的"考点换脸"·预测基于六年规律推断，供参考</small></div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>2026 变了什么 / 稳了什么</h3>
+        <div class="tbl-scroll"><table>
+          <tr><th>维度</th><th>2026 年情况</th><th>信号</th></tr>
+          <tr><td>第 1 题</td><td>六年首次由"相反数"改考<b>倒数</b></td><td>细节换脸，反背题</td></tr>
+          <tr><td>第 20 题</td><td>首设<b>「综合与实践」</b>栏目（动手操作→问题提出→问题解决），角平分线作图＋证明 DE=BC−AB，<b>完整书写、不再挖空</b></td><td>课标落地，书写权重↑</td></tr>
+          <tr><td>填空双难位</td><td>数论题<b>去掉"××数"包装</b>、前移至 15 题；圆双空后移至压轴位 16 题</td><td>位置与包装双反套路</td></tr>
+          <tr><td>集体轮空</td><td>增长率、扇形阴影、相似/位似小题、含参不等式组</td><td>传统"必背题"瘦身</td></tr>
+          <tr><td>首次考</td><td><b>胡不归</b>（24 题 PE＋√2/2·AE）、<b>直线轨迹</b>（25 题瓜豆）、《九章算术》、必然事件、开放式设问（13 题"写一个即可"）</td><td>模型库扩容</td></tr>
+          <tr><td>情境</td><td>重庆马拉松、春秋假、桥都竞赛、智能机器人、醇类分子（化学）</td><td>时事＋本土＋跨学科</td></tr>
+          <tr><td>稳的部分</td><td>选 9 正方形（六连）、选 10 整式计数（三连）、统计/方程应用模板、动点函数探究（四连）、二次函数三问框架、几何等腰系旋转压轴、17/18 题位</td><td>骨架未动</td></tr>
+        </table></div>
+        <div class="callout" style="margin-top:12px"><b>官方定调：</b>市教委组织的命题解读称 2026 卷"平稳规范、稳中求变、无偏题怪题"，突出<b>反套路反机械刷题</b>，以「综合与实践」引导学生经历"动手操作—问题提出—问题解决"全过程，并首次以《九章算术》传播数学文化。</div>
+      </div>
+      <div class="card">
+        <h3>2026 模块分值 vs 前五年均值</h3>
+        <div class="hint">方程与不等式（26 分）明显高于均值；三角形与四边形（18 分）因相似小题轮空而低于均值；统计与概率连续两年 18 分</div>
+        <div id="c_cmp2026" class="chart tall"></div>
+      </div>
+    </div>
+
+    <div class="band">
+      <div class="card b1">
+        <h3>🎯 2027 预测 · 铁律区</h3><div class="pts">六年规律 ≥5 次，直接按题位准备</div>
+        <ul>
+          <li><b>选 9 正方形</b>第七连（全等/相似/旋转/翻折轮换）</li>
+          <li><b>选 10 代数新定义多结论</b>（整式计数或换壳）</li>
+          <li>填空<b>两大难位</b>：数论双空＋圆综合双空（位置可能再对调）</li>
+          <li>17/18：不等式组＋化简求值；统计、方程应用（(2) 分式方程）模板不变</li>
+          <li>动点函数探究第五连；解直角 (2) 问动态建模</li>
+          <li>24 题三问框架：待定系数→复合最值→沿射线平移＋等角/存在性</li>
+          <li>25 题等腰系母体＋旋转手拉手＋中点构造＋轨迹最值＋翻折</li>
+        </ul>
+      </div>
+      <div class="card b2">
+        <h3>📈 2027 预测 · 趋势区</h3><div class="pts">近 2—3 年新动向，大概率延续</div>
+        <ul>
+          <li><b>「综合与实践」常态化</b>：载体可能从作图扩展到统计调查、测量方案</li>
+          <li><b>完整证明书写</b>回归后不会退回挖空模式，书写规范分量上升</li>
+          <li><b>数学文化</b>素材再现（《九章算术》《孙子算经》类古算题）</li>
+          <li>化学跨学科隔年律（2024 烷烃、2026 醇类）→ 2027 可能换物理/生物载体</li>
+          <li>绝对值方程组（两连）、统计概念题（抽样/事件，两连）大概率保留</li>
+          <li>开放性设问（"写一个即可"、多解直接写出）增多</li>
+        </ul>
+      </div>
+      <div class="card b3">
+        <h3>🔄 2027 预测 · 轮换区</h3><div class="pts">2026 轮空 ≠ 退出，复习不能丢</div>
+        <ul>
+          <li><b>增长率</b>（一元二次应用）：六年五考，2026 首歇，回归概率高</li>
+          <li><b>扇形弧长/阴影面积</b>：四年常客，留意回归</li>
+          <li><b>相似/位似小题</b>：基础换算题，随时回位</li>
+          <li>三视图呈隔年律（2023、2026）；轴对称识别与其轮换</li>
+          <li>反比例已从"过点"升级为"性质求范围"，注意函数性质类小题</li>
+        </ul>
+      </div>
+      <div class="card b4">
+        <h3>⛔ 2027 预测 · 退场区＋备考调整</h3><div class="pts">明确降权的内容与应对</div>
+        <ul>
+          <li>"含参不等式组＋分式方程"两连缺席＋官方反套路表态，<b>不建议再投入专项时间</b></li>
+          <li>纯"背题位、背结论"策略失效加快：同一题位下<b>考点会换脸</b>（相反数→倒数、有名数论→无名数论）</li>
+          <li>应对：把"题位复习"升级为"<b>模型＋书写</b>复习——模型库补齐胡不归、瓜豆直线；证明题全过程书写训练；文言/图表材料转数学语言训练</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 八 复习建议 -->
+  <section>
+    <div class="sec-t"><h2>八、复习重点与备考建议</h2><small>按目标分数分层取舍</small></div>
+    <div class="adv">
+      <div class="card">
+        <h3>① 保分盘 ≈105 分</h3><div class="pts">要求：限时 + 零失误</div>
+        <ul>
+          <li><b>计算过关</b>：分式化简求值每天 2 题；注意 3⁰、|−3|、负指数等代值细节；不等式组解集规范书写。</li>
+          <li><b>送分小题</b>限时训练：概念题按"家族"复习（相反数/倒数/绝对值一起过），防换脸。</li>
+          <li><b>统计模板</b>：中位数先排序；决策说理句式化；两个年级分别乘比例再相加。</li>
+          <li><b>方程应用</b>：(1) 一次/二元组；(2) 分式方程必检验。</li>
+          <li><b>作图＋证明</b>：五种基本作图；2026 起需<b>完整书写证明</b>，平行四边形性质判定链条要能独立成文。</li>
+        </ul>
+      </div>
+      <div class="card a2">
+        <h3>② 提分盘 ≈25 分</h3><div class="pts">五个专项，逐个击破</div>
+        <ul>
+          <li><b>选 9 正方形专项</b>：六年真题成套刷（旋转全等/半角/翻折/垂直构造＋面积比）。</li>
+          <li><b>选 10 整式计数</b>：条件翻译→有序枚举→三结论独立判断，2024—2026 三卷精做。</li>
+          <li><b>圆双空</b>：连半径、作弦心距；垂径定理＋勾股设方程（2026 用 OE=8、AD=12 即典型）。</li>
+          <li><b>数论双空</b>：设数位表示→整除/完全平方分析→枚举；没有名称包装也照此流程。</li>
+          <li><b>函数探究流程化</b>：设变量→分段表达（附范围）→描点→图象法读数（误差≤0.2）。</li>
+        </ul>
+      </div>
+      <div class="card a3">
+        <h3>③ 压轴攻坚 ≈20 分</h3><div class="pts">(1) 问必拿，(2) 问力争，(3) 问抢分</div>
+        <ul>
+          <li><b>代数方法箱</b>：铅垂线段法；折线最值全家族——将军饮马 / 造桥选址 / 三折线 / <b>胡不归（2026 已考，重点补）</b>；沿射线平移拆 (Δx,Δy)；<b>等角问题</b>（tan＋相似/对称，三连必练）；存在性中点公式分类。</li>
+          <li><b>几何模型箱</b>：手拉手旋转全等、倍长中线、中点构造、截长补短；<b>轨迹思想</b>——隐圆（定角定弦/定长定点）＋<b>主从联动直线（瓜豆，2026 已考）</b>；翻折＝垂直平分；分类讨论。</li>
+          <li>末问"直接写出"：先完整写一种情况，其余抢答案分。</li>
+        </ul>
+      </div>
+      <div class="card a4">
+        <h3>④ 应试策略与分层目标</h3><div class="pts">120 分钟分配参考</div>
+        <ul>
+          <li>选择＋填空 ≤40 min（选 10、两个双空先跳）→ 17-21 题 30 min → 函数探究＋解直角 20 min → 两道压轴 25 min → 回补 5 min。</li>
+          <li><b>目标 100~110</b>：保分盘＋两压轴 (1) 问。</li>
+          <li><b>目标 125~135</b>：＋选 9、圆双空、数论第一空、函数探究全对、压轴 (2) 问。</li>
+          <li><b>目标 140+</b>：＋选 10、两个双空第二空、代数压轴 (3) 问。</li>
+          <li>三轮安排：一轮按模块过基础；二轮按<b>题位＋模型</b>做专题；三轮以 <b>2024—2026 三卷</b>为基准限时全真模拟。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 九 逐题明细 -->
+  <section>
+    <div class="sec-t"><h2>九、六年逐题考点明细</h2><small>点击年份切换 · 共 153 题</small></div>
+    <div class="card">
+      <div class="tabs" id="yrTabs"></div>
+      <div id="yrPanels"></div>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>数据与方法：</b>统计基于 6 套真题逐题标注（2021—2024 为 A 卷，2025—2026 为全市统一卷，2026 年为原卷 PDF）；模块归类时综合题计入其主要考查模块；2027 预测为基于六年命题规律的推断，仅供参考。图表由 ECharts 渲染，首次打开需联网加载图表库。</p>
+    <p style="margin-top:6px"><b>背景资料：</b>
+      <a href="https://m.sohu.com/a/1036209719_120388781" target="_blank">2026 中考数学试卷解读：反套路反机械刷题（搜狐）</a> ·
+      <a href="https://finance.sina.com.cn/jjxw/2026-06-13/doc-inichssm1285657.shtml" target="_blank">2026 中考数学等命题解读（新浪）</a> ·
+      <a href="https://www.sohu.com/a/904211126_121956425" target="_blank">2025 重庆中考数学命题思路解析（搜狐教育）</a> ·
+      <a href="https://m.cq.bendibao.com/edu/151499.shtm" target="_blank">重庆中考科目及分数（重庆本地宝）</a>
+    </p>
+  </footer>
+</div>
+
+<script>
+/* ================= 数据 ================= */
+var YEARS = ['2021','2022','2023','2024','2025','2026'];
+var STRUCT = { sel:[48,48,40,40,40,40], fill:[24,16,32,32,24,24], jieda:[78,86,78,78,86,86], cnt:[26,25,26,26,25,25] };
+var DOMAIN = { alg:[90,84,74,74,84,82], geo:[46,52,62,62,48,50], stat:[14,14,14,14,18,18] };
+var MODULES = ['数与式','方程与不等式','函数','新定义与规律','三角形与四边形','圆','图形变换与作图','解直角三角形','统计与概率'];
+var MOD_YEAR = [ /* 每年 9 模块分值，与 MODULES 对应 */
+  [26,26,28,10,20,8,14,4,14],   // 2021
+  [20,22,24,18,22,8,12,10,14],  // 2022
+  [20,18,24,12,30,8,14,10,14],  // 2023
+  [20,18,24,12,30,8,14,10,14],  // 2024
+  [22,26,24,12,18,8,12,10,18],  // 2025
+  [20,26,24,12,18,8,14,10,18]   // 2026
+];
+var MOD_AVG5 = [21.6,22,24.8,12.8,24,8,13.2,8.8,14.8]; /* 2021-2025 均值 */
+/* 高频考点: [名称, 六年累计分值, 出现年数, 说明] */
+var FREQ = [
+  ['二次函数综合压轴',60,6,'固定三问：待定系数→复合最值(铅垂/折线/胡不归)→沿射线平移＋等角/存在性'],
+  ['统计大题',60,6,'求统计量→样本估计总体→决策说理，六年模板不变'],
+  ['方程(组)应用大题',60,6,'(1)一次/二元组 (2)分式方程(5/6年)或一元二次a%(2021)'],
+  ['几何综合压轴',58,6,'等腰系母体：导角→线段关系证明→轨迹最值(隐圆/直线)＋翻折'],
+  ['尺规作图＋推理证明',56,6,'2022起填空式证明；2026升级为「综合与实践」完整证明'],
+  ['解直角三角形应用',54,6,'方向角为主；(2)问连续两年动态建模(2025相遇/2026距离方程)'],
+  ['整式与分式化简',52,6,'乘法公式＋分式混合运算；近两年为化简求值'],
+  ['函数图象探究题',50,5,'2023—2026动点建模四连(2026反比例＋分段一次)'],
+  ['圆（选填小题）',48,6,'六年0大题；2024—2026连续三年双空难题'],
+  ['新定义数论题',36,6,'合和数→勾股和数→递减数→方减数→十全数→2026无名称直接给条件'],
+  ['反比例函数',30,6,'过点/求k为主；2026升级为性质求y范围'],
+  ['正方形综合（选9）',24,6,'六年全考：旋转/角平分线/半角/旋转90°/翻折/垂直构造'],
+  ['简单概率',24,6,'放回型两步为主，近两年一步简单概率'],
+  ['实数概念（第1题）',24,6,'相反数×4＋比大小×1＋2026倒数'],
+  ['无理数估算/二次根式',24,6,'2026开放式：写一个满足√7<n<√29的整数'],
+  ['新定义多结论(选择压轴)',20,5,'2024—2026三连"整式计数"'],
+  ['规律探究',20,5,'一次规律；2024烷烃、2026醇类均为化学载体'],
+  ['平行线与角度',20,5,'送分题位'],
+  ['增长率问题',16,5,'a(1+x)²=b；2026首次缺席，留意回归'],
+  ['含参不等式组＋分式方程',16,4,'2021—2024连续；2025—2026缺席，确认退场'],
+  ['扇形弧长与阴影面积',16,4,'2025—2026连续缺席，留意回归'],
+  ['相似/位似基础小题',16,4,'2025—2026缺席（相似转入选9与压轴内考查）']
+];
+var DIFF = [ {name:'基础题（送分）',value:105}, {name:'中档题',value:25}, {name:'压轴难题',value:20} ];
+var CTX_THEME = [ {name:'科技强国',value:12}, {name:'民生经济',value:9}, {name:'文化时事与校园',value:5}, {name:'体育健康',value:4}, {name:'生态自然与节约',value:3} ];
+var CTX_YEAR = [5,6,4,7,5,6];
+
+/* 逐题明细: [题号, 分值, 考点, 标签] */
+var PAPERS = {
+ '2021': [[1,4,'相反数',''],[2,4,'单项式除法',''],[3,4,'不等式解集数轴表示',''],[4,4,'位似 → 周长比',''],[5,4,'圆内接四边形对角互补',''],[6,4,'二次根式运算',''],[7,4,'全等判定条件辨析',''],[8,4,'一次函数图象应用（无人机）','情境'],[9,4,'正方形对角线＋旋转全等','重点'],[10,4,'解直角应用（仰角＋坡度·通信基站）','情境'],[11,4,'含参不等式组＋分式方程','较难'],[12,4,'反比例 k＋菱形＋面积','压轴'],[13,4,'绝对值＋零指数幂',''],[14,4,'两步概率（积为负）',''],[15,4,'已知方程的解求参数',''],[16,4,'矩形＋扇形阴影面积',''],[17,4,'翻折＋平行 求四边形面积','较难'],[18,4,'三种饮料销售额（比例＋百分数）','压轴'],[19,10,'整式＋分式化简',''],[20,10,'统计（光盘行动）','情境'],[21,10,'尺规作图＋平行四边形中猜想并证明',''],[22,10,'新函数 y=(4−x²)/(x²+1) 图象性质探究',''],[23,10,'一次方程＋a% 一元二次（工业互联网）','情境'],[24,10,'新定义「合和数」','新定义'],[25,10,'二次函数：周长最大＋平移＋平行四边形存在性','压轴'],[26,8,'几何压轴：等腰＋旋转 · 倍长中线 · 求比值','压轴']],
+ '2022': [[1,4,'相反数',''],[2,4,'轴对称图形',''],[3,4,'平行线＋同旁内角',''],[4,4,'函数图象实际意义（蝴蝶）','情境'],[5,4,'位似 → 周长比',''],[6,4,'规律探究（4n＋1）',''],[7,4,'二次根式乘法＋估算',''],[8,4,'增长率一元二次方程（快递）','情境'],[9,4,'正方形全等＋角平分线求角','重点'],[10,4,'切线＋相似＋勾股求长','较难'],[11,4,'含参不等式组＋分式方程','较难'],[12,4,'新定义「加算操作」多结论','压轴'],[13,4,'绝对值＋零指数幂',''],[14,4,'放回抽卡概率',''],[15,4,'菱形＋扇形组合阴影','较难'],[16,4,'种树费用比（比例＋百分数）','压轴'],[17,8,'整式＋分式化简',''],[18,8,'尺规作垂线＋矩形 AAS 填空证明',''],[19,10,'统计（扫地机器人）','情境'],[20,10,'反比例＋一次函数综合',''],[21,10,'一次方程＋分式方程（骑行）','情境'],[22,10,'解直角应用（方向角·步道比较）','情境'],[23,10,'新定义「勾股和数」','新定义'],[24,10,'二次函数：线段和最大＋左移5＋平行四边形','压轴'],[25,10,'几何压轴：60°双动点 · 定角隐圆＋双翻折','压轴']],
+ '2023': [[1,4,'相反数',''],[2,4,'三视图',''],[3,4,'反比例过点',''],[4,4,'相似周长比 → 边比',''],[5,4,'平行线＋垂直求角',''],[6,4,'无理数估算',''],[7,4,'规律探究（5n＋4）',''],[8,4,'切线＋30°求长',''],[9,4,'正方形半角模型','重点'],[10,4,'新定义「绝对操作」多结论','压轴'],[11,4,'负指数＋零指数',''],[12,4,'正五边形求角',''],[13,4,'放回两次概率',''],[14,4,'增长率列方程（就业岗位）','情境'],[15,4,'一线三垂直全等','较难'],[16,4,'矩形外接圆阴影',''],[17,4,'含参不等式组＋分式方程','较难'],[18,4,'新定义「递减数」（双空）','压轴'],[19,8,'整式＋分式化简',''],[20,10,'尺规垂直平分线＋全等填空＋命题补全',''],[21,10,'统计（智能玩具飞机）','情境'],[22,10,'方程组＋分式方程（预制食品）','情境'],[23,10,'等边双动点分段函数探究','较难'],[24,10,'解直角应用（方向角·线路决策）','情境'],[25,10,'二次函数：周长最大＋沿射线平移√5＋菱形','压轴'],[26,10,'几何压轴：垂线段最小 · 中点隐圆＋二次翻折','压轴']],
+ '2024': [[1,4,'有理数比大小',''],[2,4,'轴对称（化学仪器）','跨学科'],[3,4,'反比例求 k',''],[4,4,'平行线求角',''],[5,4,'相似比 → 面积比',''],[6,4,'规律探究（烷烃 2n＋2）','跨学科'],[7,4,'无理数估算',''],[8,4,'矩形＋双弧相切阴影','较难'],[9,4,'正方形＋旋转90°求比值','重点'],[10,4,'整式计数多结论（新定义）','压轴'],[11,4,'零指数＋负指数',''],[12,4,'外角求边数',''],[13,4,'选景点概率（重庆旅游）','情境'],[14,4,'增长率求率（缴税）','情境'],[15,4,'平行＋等腰＋相似求线段','较难'],[16,4,'含参不等式组＋分式方程','较难'],[17,4,'圆＋切线＋平行四边形（双空）','较难'],[18,4,'新定义「方减数」（双空）','压轴'],[19,8,'整式＋分式化简',''],[20,10,'统计（安全竞赛·合并估计）','情境'],[21,10,'尺规过中点垂线＋矩形→菱形＋推广猜想',''],[22,10,'方程组＋分式方程（新质生产力）','情境'],[23,10,'正比例 vs 反比例函数探究','较难'],[24,10,'解直角应用（方向角·货轮谁先到）','情境'],[25,10,'二次函数：三折线最小＋沿射线平移＋等角','压轴'],[26,10,'几何压轴：轴对称定角 · 等腰分类讨论','压轴']],
+ '2025': [[1,4,'相反数',''],[2,4,'轴对称图形',''],[3,4,'普查与抽样调查（哪吒2）','情境'],[4,4,'圆周角定理',''],[5,4,'规律探究（4n）',''],[6,4,'反比例过点',''],[7,4,'科学记数法比大小',''],[8,4,'增长率求率（景区游客）','情境'],[9,4,'正方形翻折＋角平分线求面积','重点'],[10,4,'整式计数多结论（新定义）','压轴'],[11,4,'摸球概率',''],[12,4,'平行线求角',''],[13,4,'无理数估算 n＜√26＜n＋1',''],[14,4,'绝对值方程组求 xy','较难'],[15,4,'圆＋菱形＋垂径定理（双空）','较难'],[16,4,'新定义「十全数」（双空）','压轴'],[17,8,'解一元一次不等式组','新题位'],[18,8,'尺规角平分线新作法＋HL 填空','新形式'],[19,10,'统计（航天知识竞赛）','情境'],[20,10,'化简求值（整式＋分式）','新形式'],[21,10,'一次方程＋分式方程（文创产品）','情境'],[22,10,'矩形对角线动点函数探究','较难'],[23,10,'解直角应用（无人机巡林·动态相遇）','情境'],[24,10,'二次函数：比值最大＋定长平移最小＋等角','压轴'],[25,10,'几何压轴：旋转60° · 隐圆双最值＋翻折','压轴']],
+ '2026': [[1,4,'倒数概念（六年首次替换相反数）','新形式'],[2,4,'三视图（正面视图）',''],[3,4,'科学记数法（重庆马拉松 25000 人）','情境'],[4,4,'圆周角定理（∠ACB=40°→∠AOB=80°）',''],[5,4,'必然事件判断',''],[6,4,'规律探究（醇类分子氢原子 2n＋2）','跨学科'],[7,4,'反比例函数性质：1<x<2 求 y 范围','新形式'],[8,4,'《九章算术》大小容器列二元一次方程组','文化'],[9,4,'正方形＋垂直构造＋相似求面积比','重点'],[10,4,'整式计数多结论（新定义·三连）','压轴'],[11,4,'抽取节目概率 1/5',''],[12,4,'平行线求角（∠1=58°）',''],[13,4,'无理数估算（开放：写一个 √7<n<√29）','新形式'],[14,4,'绝对值方程组求 xy（连续第二年）','较难'],[15,4,'两位数数论：m+n 最小值＋k²=m²−n²（双空·无名称包装）','压轴'],[16,4,'圆＋平行四边形求 OB、BG（双空·居压轴位）','较难'],[17,8,'解一元一次不等式组','']
+ ,[18,8,'分式化简求值（x=3⁰）',''],[19,10,'统计（桥梁知识竞赛·桥都）','情境'],[20,10,'综合与实践：尺规角平分线＋完整证明 DE=BC−AB','新形式'],[21,10,'一次方程＋分式方程（智能机器人配件）','情境'],[22,10,'矩形双动点函数探究（反比例＋分段一次）','较难'],[23,10,'解直角应用（春秋假景区·动态距离方程）','情境'],[24,10,'二次函数：PD 最大＋胡不归 PE+√2/2·AE＋平移等角','压轴'],[25,10,'几何压轴：等腰直角＋旋转90° · 直线轨迹＋翻折','压轴']]
+};
+
+/* ================= 图表 ================= */
+function mk(id,opt){ var el=document.getElementById(id); if(!window.echarts){el.innerHTML='<div class="nojs">⚠ 图表库加载失败：请联网后刷新页面</div>';return null} var c=echarts.init(el); c.setOption(opt); window.addEventListener('resize',function(){c.resize()}); return c }
+var C={ind:'#4f46e5',vio:'#7c3aed',cy:'#0891b2',rose:'#e11d48',amber:'#d97706',green:'#059669',grey:'#94a3b8'};
+var baseTxt={fontFamily:'Microsoft YaHei'};
+
+/* 1 结构 */
+mk('c_struct',{
+  textStyle:baseTxt, tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  legend:{data:['选择','填空','解答','总题量'],top:0},
+  grid:{left:44,right:44,top:38,bottom:28},
+  xAxis:{type:'category',data:YEARS,axisLine:{lineStyle:{color:'#cbd5e1'}}},
+  yAxis:[{type:'value',name:'分值',max:150,splitLine:{lineStyle:{color:'#eef2f7'}}},
+         {type:'value',name:'题量',min:20,max:28,splitLine:{show:false}}],
+  series:[
+    {name:'选择',type:'bar',stack:'s',data:STRUCT.sel,barWidth:30,itemStyle:{color:C.ind}},
+    {name:'填空',type:'bar',stack:'s',data:STRUCT.fill,itemStyle:{color:C.cy}},
+    {name:'解答',type:'bar',stack:'s',data:STRUCT.jieda,itemStyle:{color:'#a5b4fc'}},
+    {name:'总题量',type:'line',yAxisIndex:1,data:STRUCT.cnt,symbolSize:9,lineStyle:{width:3,color:C.rose},itemStyle:{color:C.rose},label:{show:true,formatter:'{c}题',color:C.rose,fontSize:11,position:'bottom'}}
+  ]
+});
+
+/* 2 三大领域 */
+mk('c_domain',{
+  textStyle:baseTxt, tooltip:{trigger:'axis'},
+  legend:{data:['数与代数','图形与几何','统计与概率'],top:0},
+  grid:{left:44,right:20,top:38,bottom:28},
+  xAxis:{type:'category',data:YEARS,boundaryGap:false,axisLine:{lineStyle:{color:'#cbd5e1'}}},
+  yAxis:{type:'value',name:'分值',max:100,splitLine:{lineStyle:{color:'#eef2f7'}}},
+  series:[
+    {name:'数与代数',type:'line',data:DOMAIN.alg,smooth:true,symbolSize:8,lineStyle:{width:3,color:C.ind},itemStyle:{color:C.ind},areaStyle:{color:'rgba(79,70,229,.10)'},label:{show:true,fontSize:11,color:C.ind}},
+    {name:'图形与几何',type:'line',data:DOMAIN.geo,smooth:true,symbolSize:8,lineStyle:{width:3,color:C.green},itemStyle:{color:C.green},areaStyle:{color:'rgba(5,150,105,.08)'},label:{show:true,fontSize:11,color:C.green}},
+    {name:'统计与概率',type:'line',data:DOMAIN.stat,smooth:true,symbolSize:8,lineStyle:{width:3,color:C.amber},itemStyle:{color:C.amber},label:{show:true,fontSize:11,color:C.amber}}
+  ]
+});
+
+/* 3 热力图（色条与网格列对齐） */
+var HEAT_L=110, HEAT_R=26;
+var heatData=[];
+for(var y=0;y<YEARS.length;y++) for(var m=0;m<MODULES.length;m++){
+  var v=MOD_YEAR[y][m];
+  heatData.push({value:[y,m,v],label:{color:v>=20?'#ffffff':'#1e293b'}});
+}
+var heatChart=mk('c_heat',{
+  textStyle:baseTxt,
+  tooltip:{formatter:function(p){return YEARS[p.value[0]]+' 年 · '+MODULES[p.value[1]]+'：<b>'+p.value[2]+' 分</b>'}},
+  grid:{left:HEAT_L,right:HEAT_R,top:14,bottom:80},
+  xAxis:{type:'category',data:YEARS,splitArea:{show:true},axisLabel:{fontSize:12,margin:12}},
+  yAxis:{type:'category',data:MODULES,inverse:true,splitArea:{show:true},axisLabel:{fontSize:12}},
+  visualMap:{min:4,max:30,calculable:false,orient:'horizontal',left:HEAT_L,bottom:8,itemWidth:12,itemHeight:300,text:['',''],inRange:{color:['#eef2ff','#a5b4fc','#4f46e5','#312e81']}},
+  series:[{type:'heatmap',data:heatData,label:{show:true,fontSize:11.5,fontWeight:600,formatter:function(p){return p.value[2]}},itemStyle:{borderColor:'#fff',borderWidth:2},emphasis:{itemStyle:{shadowBlur:8,shadowColor:'rgba(0,0,0,.25)'}}}]
+});
+function fitHeatVM(){
+  if(!heatChart) return;
+  var w=heatChart.getWidth();
+  heatChart.setOption({visualMap:{left:HEAT_L,itemHeight:Math.max(120,w-HEAT_L-HEAT_R)}});
+}
+fitHeatVM(); window.addEventListener('resize',fitHeatVM);
+
+/* 4 高频考点 */
+var fq=FREQ.slice().sort(function(a,b){return a[1]-b[1]});
+mk('c_freq',{
+  textStyle:baseTxt,
+  tooltip:{formatter:function(p){var d=FREQ.find(function(x){return x[0]===p.name});return '<b>'+p.name+'</b><br>六年累计约 '+d[1]+' 分 · 出现 '+d[2]+'/6 年<br><span style="color:#64748b">'+d[3]+'</span>'},confine:true},
+  grid:{left:178,right:80,top:6,bottom:24},
+  xAxis:{type:'value',name:'六年累计分值',splitLine:{lineStyle:{color:'#eef2f7'}}},
+  yAxis:{type:'category',data:fq.map(function(d){return d[0]}),axisLabel:{fontSize:12,color:'#334155'}},
+  series:[{type:'bar',data:fq.map(function(d){return {value:d[1],itemStyle:{color:d[2]===6?C.ind:(d[2]===5?C.cy:C.grey),borderRadius:[0,6,6,0]}}}),barWidth:15,
+    label:{show:true,position:'right',fontSize:11,color:'#64748b',formatter:function(p){var d=FREQ.find(function(x){return x[0]===p.name});return d[1]+'分 · '+d[2]+'/6年'}}}]
+});
+
+/* 5 难度 */
+mk('c_diff',{
+  textStyle:baseTxt, tooltip:{formatter:'{b}：{c} 分（{d}%）'},
+  legend:{bottom:0},
+  series:[{type:'pie',radius:['42%','68%'],center:['50%','46%'],
+    data:[{name:DIFF[0].name,value:DIFF[0].value,itemStyle:{color:C.green}},
+          {name:DIFF[1].name,value:DIFF[1].value,itemStyle:{color:C.amber}},
+          {name:DIFF[2].name,value:DIFF[2].value,itemStyle:{color:C.rose}}],
+    label:{formatter:'{b}\n{c}分（{d}%）',fontSize:12},
+    itemStyle:{borderColor:'#fff',borderWidth:3,borderRadius:6}}]
+});
+
+/* 6 情境 */
+mk('c_ctx',{
+  textStyle:baseTxt, tooltip:{trigger:'item'},
+  legend:{bottom:0,textStyle:{fontSize:12}},
+  series:[
+    {name:'主题',type:'pie',radius:['30%','58%'],center:['50%','44%'],roseType:'radius',
+      data:[{name:'科技强国',value:12,itemStyle:{color:C.ind}},
+            {name:'民生经济',value:9,itemStyle:{color:C.cy}},
+            {name:'文化时事与校园',value:5,itemStyle:{color:C.rose}},
+            {name:'体育健康',value:4,itemStyle:{color:C.green}},
+            {name:'生态自然与节约',value:3,itemStyle:{color:C.amber}}],
+      label:{formatter:'{b} {c}道',fontSize:12},
+      itemStyle:{borderColor:'#fff',borderWidth:2,borderRadius:5},
+      tooltip:{formatter:'{b}：六年共 {c} 道情境题（{d}%）'}}
+  ],
+  graphic:[{type:'text',left:'center',top:'40%',style:{text:'33 道',fontSize:20,fontWeight:'bold',fill:'#1e293b',fontFamily:'Microsoft YaHei'}},
+           {type:'text',left:'center',top:'49%',style:{text:'情境题/6年',fontSize:11,fill:'#94a3b8',fontFamily:'Microsoft YaHei'}}]
+});
+
+/* 7 2026 vs 五年均值 */
+mk('c_cmp2026',{
+  textStyle:baseTxt, tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  legend:{data:['2021—2025 均值','2026'],top:0},
+  grid:{left:110,right:56,top:34,bottom:16},
+  xAxis:{type:'value',name:'分值',splitLine:{lineStyle:{color:'#eef2f7'}}},
+  yAxis:{type:'category',data:MODULES.slice().reverse(),axisLabel:{fontSize:12}},
+  series:[
+    {name:'2021—2025 均值',type:'bar',data:MOD_AVG5.slice().reverse(),barWidth:10,itemStyle:{color:'#c7d2fe',borderRadius:[0,5,5,0]}},
+    {name:'2026',type:'bar',data:MOD_YEAR[5].slice().reverse(),barWidth:10,itemStyle:{color:C.rose,borderRadius:[0,5,5,0]},label:{show:true,position:'right',fontSize:11,color:C.rose}}
+  ]
+});
+
+/* ================= 逐题明细 tabs ================= */
+var tagCls={ '压轴':'red','较难':'amber','重点':'blue','情境':'green','新定义':'red','跨学科':'cyan','新题位':'cyan','新形式':'cyan','文化':'cyan' };
+var tabsEl=document.getElementById('yrTabs'), panelsEl=document.getElementById('yrPanels');
+YEARS.forEach(function(y,i){
+  var last=(i===YEARS.length-1);
+  var btn=document.createElement('button'); btn.className='tab-btn'+(last?' on':''); btn.textContent=y+' 年'; btn.dataset.y=y; tabsEl.appendChild(btn);
+  var rows=PAPERS[y].map(function(q){
+    var tag=q[3]?'<span class="tag '+(tagCls[q[3]]||'blue')+'">'+q[3]+'</span>':'';
+    return '<tr><td style="white-space:nowrap">第 '+q[0]+' 题</td><td>'+q[1]+' 分</td><td>'+q[2]+tag+'</td></tr>';
+  }).join('');
+  var total=PAPERS[y].reduce(function(s,q){return s+q[1]},0);
+  var panel=document.createElement('div'); panel.className='tab-panel'+(last?' on':''); panel.dataset.y=y;
+  panel.innerHTML='<div class="tbl-scroll"><table><tr><th style="width:90px">题号</th><th style="width:70px">分值</th><th>考点</th></tr>'+rows+
+    '<tr><td colspan="2"><b>合计</b></td><td><b>'+PAPERS[y].length+' 题 · '+total+' 分</b></td></tr></table></div>';
+  panelsEl.appendChild(panel);
+});
+tabsEl.addEventListener('click',function(e){
+  if(!e.target.classList.contains('tab-btn'))return;
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('on')});
+  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('on')});
+  e.target.classList.add('on');
+  document.querySelector('.tab-panel[data-y="'+e.target.dataset.y+'"]').classList.add('on');
+});
+</script>
+</body>
+</html>
