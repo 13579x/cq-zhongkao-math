@@ -526,8 +526,8 @@ var fq=FREQ.slice().sort(function(a,b){return a[1]-b[1]});
 mk('c_freq',{
   textStyle:baseTxt,
   tooltip:{formatter:function(p){var d=FREQ.find(function(x){return x[0]===p.name});return '<b>'+p.name+'</b><br>六年累计约 '+d[1]+' 分 · 出现 '+d[2]+'/6 年<br><span style="color:#64748b">'+d[3]+'</span>'},confine:true},
-  grid:{left:178,right:80,top:6,bottom:24},
-  xAxis:{type:'value',name:'六年累计分值',splitLine:{lineStyle:{color:'#eef2f7'}}},
+  grid:{left:178,right:80,top:6,bottom:40},
+  xAxis:{type:'value',name:'六年累计分值',nameLocation:'middle',nameGap:26,splitLine:{lineStyle:{color:'#eef2f7'}}},
   yAxis:{type:'category',data:fq.map(function(d){return d[0]}),axisLabel:{fontSize:12,color:'#334155'}},
   series:[{type:'bar',data:fq.map(function(d){return {value:d[1],itemStyle:{color:d[2]===6?C.ind:(d[2]===5?C.cy:C.grey),borderRadius:[0,6,6,0]}}}),barWidth:15,
     label:{show:true,position:'right',fontSize:11,color:'#64748b',formatter:function(p){var d=FREQ.find(function(x){return x[0]===p.name});return d[1]+'分 · '+d[2]+'/6年'}}}]
@@ -568,8 +568,8 @@ mk('c_ctx',{
 mk('c_cmp2026',{
   textStyle:baseTxt, tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
   legend:{data:['2021—2025 均值','2026'],top:0},
-  grid:{left:110,right:56,top:34,bottom:16},
-  xAxis:{type:'value',name:'分值',splitLine:{lineStyle:{color:'#eef2f7'}}},
+  grid:{left:110,right:56,top:40,bottom:44},
+  xAxis:{type:'value',name:'分值',nameLocation:'middle',nameGap:28,splitLine:{lineStyle:{color:'#eef2f7'}}},
   yAxis:{type:'category',data:MODULES.slice().reverse(),axisLabel:{fontSize:12}},
   series:[
     {name:'2021—2025 均值',type:'bar',data:MOD_AVG5.slice().reverse(),barWidth:10,itemStyle:{color:'#c7d2fe',borderRadius:[0,5,5,0]}},
