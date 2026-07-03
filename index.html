@@ -110,6 +110,30 @@
   footer a{color:var(--primary);text-decoration:none}
   .nojs{padding:30px;text-align:center;color:var(--muted);font-size:13px}
 
+  /* ---------- 目录导航 ---------- */
+  html{scroll-behavior:smooth}
+  section{scroll-margin-top:16px}
+  .card a{color:var(--primary);text-decoration:none}
+  .card a:hover{text-decoration:underline}
+  #tocFab,#topBtn{position:fixed;right:16px;width:44px;height:44px;border-radius:50%;border:none;box-shadow:0 4px 14px rgba(30,41,59,.28);cursor:pointer;z-index:60;font-size:17px;display:flex;align-items:center;justify-content:center}
+  #tocFab{bottom:20px;background:var(--primary);color:#fff}
+  #topBtn{bottom:74px;background:#fff;color:var(--primary);opacity:0;pointer-events:none;transition:.2s}
+  #topBtn.show{opacity:1;pointer-events:auto}
+  #toc{position:fixed;z-index:70;background:#fff;border-radius:14px;box-shadow:0 10px 34px rgba(30,41,59,.22);padding:10px 8px;right:16px;bottom:76px;width:184px;display:none;max-height:72vh;overflow-y:auto}
+  #toc.open{display:block}
+  #toc .toc-t{font-size:12px;color:var(--muted);padding:4px 12px 6px;letter-spacing:2px}
+  #toc a{display:block;padding:7px 12px;font-size:13.5px;color:#334155;text-decoration:none;border-radius:8px;border-left:3px solid transparent}
+  #toc a:hover{background:#f1f5f9}
+  #toc a.on{color:var(--primary);background:#eef2ff;border-left-color:var(--primary);font-weight:600}
+  #tocMask{position:fixed;inset:0;z-index:55;display:none}
+  #tocMask.open{display:block}
+  @media(min-width:1620px){
+    #toc{display:block;left:calc(50% + 610px);right:auto;bottom:auto;top:110px;box-shadow:0 4px 14px rgba(30,41,59,.10)}
+    #tocFab{display:none}
+    #topBtn{bottom:20px}
+    #tocMask{display:none!important}
+  }
+
   /* ---------- 手机端适配 ---------- */
   @media(max-width:640px){
     header{padding:38px 16px 80px}
@@ -159,7 +183,7 @@
   </div>
 
   <!-- 一 结构演变 -->
-  <section>
+  <section id="sec1">
     <div class="sec-t"><h2>一、卷型结构演变</h2><small>2023、2025 两次调整后进入稳定期，2026 结构与 2025 完全一致</small></div>
     <div class="grid2">
       <div class="card">
@@ -184,7 +208,7 @@
   </section>
 
   <!-- 二 模块分布 -->
-  <section>
+  <section id="sec2">
     <div class="sec-t"><h2>二、模块分值分布</h2><small>综合题按主要考查内容归入所属模块</small></div>
     <div class="grid2">
       <div class="card">
@@ -202,7 +226,7 @@
   </section>
 
   <!-- 三 高频考点 -->
-  <section>
+  <section id="sec3">
     <div class="sec-t"><h2>三、高频考点排行</h2><small>按六年累计分值排序，标注出现年数</small></div>
     <div class="card">
       <h3>高频考点六年累计分值 TOP 22</h3>
@@ -213,7 +237,7 @@
   </section>
 
   <!-- 四 题位图谱 -->
-  <section>
+  <section id="sec4">
     <div class="sec-t"><h2>四、固定题位图谱与压轴模板</h2><small>重庆卷题位高度定型，可按"题位"组织复习</small></div>
     <div class="card">
       <h3>题位图谱（以 2025—2026 结构为准）</h3>
@@ -266,7 +290,7 @@
   </section>
 
   <!-- 五 模型词典 -->
-  <section>
+  <section id="sec5">
     <div class="sec-t"><h2>五、压轴模型词典</h2><small>把教研"黑话"翻译成人话 · 出处记法：21·26(2)＝2021 年第 26 题第(2)问</small></div>
     <div class="card">
       <div class="hint">每个模型三件事：是什么、什么时候想到它、六年真题里在哪出现过。复习时按出处把真题精做一遍，比刷十道同类题有效。</div>
@@ -291,7 +315,7 @@
   </section>
 
   <!-- 六 难度与情境 -->
-  <section>
+  <section id="sec6">
     <div class="sec-t"><h2>六、难度结构与情境主题</h2><small>难度约 7 : 2 : 1；情境题每卷 4~7 道</small></div>
     <div class="grid2">
       <div class="card">
@@ -308,7 +332,7 @@
   </section>
 
   <!-- 六 趋势 -->
-  <section>
+  <section id="sec7">
     <div class="sec-t"><h2>七、六年命题趋势</h2><small>结构瘦身 · 反套路 · 素养导向</small></div>
     <div class="card">
       <div class="timeline">
@@ -323,7 +347,7 @@
   </section>
 
   <!-- 七 2026重点分析与2027预测 -->
-  <section>
+  <section id="sec8">
     <div class="sec-t hot"><h2>八、2026 年卷重点分析 ＆ 2027 预测</h2><small>结构稳定期的"考点换脸"·预测基于六年规律推断，供参考</small></div>
 
     <div class="grid2">
@@ -415,7 +439,7 @@
   </section>
 
   <!-- 八 复习建议 -->
-  <section>
+  <section id="sec9">
     <div class="sec-t"><h2>九、复习重点与备考建议</h2><small>按目标分数分层取舍</small></div>
     <div class="adv">
       <div class="card">
@@ -478,16 +502,16 @@
 
     <div class="card" style="margin-top:16px">
       <h3>📅 2027 届备考月历（按重庆节奏）</h3>
-      <div class="hint">一轮打底 → 二轮题位专题 → 三轮全真，配合本页第四、五、八节使用</div>
+      <div class="hint">一轮打底 → 二轮题位专题 → 三轮全真，配合本页<a href="#sec4">第四</a>、<a href="#sec5">五</a>、<a href="#sec8">八</a>节使用</div>
       <div class="tbl-scroll"><table>
         <tr><th>时间</th><th>阶段</th><th>核心任务</th></tr>
-        <tr><td>2026.7—8（暑假）</td><td>起步</td><td>预习初三上（二次函数、旋转、圆）；每天 2 题分式化简保手感；把第五节"模型词典"通读一遍，先混个脸熟</td></tr>
+        <tr><td>2026.7—8（暑假）</td><td>起步</td><td>预习初三上（二次函数、旋转、圆）；每天 2 题分式化简保手感；把<a href="#sec5">第五节</a>"模型词典"通读一遍，先混个脸熟</td></tr>
         <tr><td>2026.9—10</td><td>同步＋渗透</td><td>跟紧二次函数、旋转新课；每周一次选填限时（40 分钟内）；开始成套积累"选 9 正方形"小题</td></tr>
         <tr><td>2026.11—12</td><td>一轮启动</td><td>期末即一轮预演：数与式→方程→函数逐模块过；圆按"选填技巧"路线复习（垂径设方程、切线、圆周角导角）</td></tr>
         <tr><td>2027.1—2（寒假）</td><td>一轮收尾＋模型第一遍</td><td>全模块查漏；压轴模型箱第一遍（手拉手、中点四大件、铅垂法、将军饮马）；完整做 2021—2023 三套真题</td></tr>
-        <tr><td>2027.3</td><td>二轮·题位专题</td><td>按第四节题位图谱开专题：选 9 / 选 10 / 两大双空 / 作图与综合实践 / 统计 / 方程应用</td></tr>
+        <tr><td>2027.3</td><td>二轮·题位专题</td><td>按<a href="#sec4">第四节题位图谱</a>开专题：选 9 / 选 10 / 两大双空 / 作图与综合实践 / 统计 / 方程应用</td></tr>
         <tr><td>2027.4</td><td>二轮·压轴专项</td><td>折线最值家族（含胡不归）、等角问题、轨迹（隐圆＋瓜豆直线）；一诊/一模后按题位归因复盘</td></tr>
-        <tr><td>2027.5</td><td>三轮·新题型与查漏</td><td>综合与实践题演练（完整证明书写）；第八节"冷门防守清单"逐条过；二模错题回收</td></tr>
+        <tr><td>2027.5</td><td>三轮·新题型与查漏</td><td>综合与实践题演练（完整证明书写）；<a href="#sec8">第八节</a>"冷门防守清单"逐条过；二模错题回收</td></tr>
         <tr><td>2027.6（考前两周）</td><td>全真模拟</td><td>2024—2026 三卷按 9:00—11:00 限时全真同步生物钟；最后一周只回归基础与书写规范，不攻新难题</td></tr>
       </table></div>
       <div class="hint" style="margin-top:8px">注：各区县一诊/二诊时间不一，以学校安排为准；重庆中考近年均为 6 月 12—14 日。</div>
@@ -495,7 +519,7 @@
   </section>
 
   <!-- 九 逐题明细 -->
-  <section>
+  <section id="sec10">
     <div class="sec-t"><h2>十、六年逐题考点明细</h2><small>点击年份切换 · 共 153 题</small></div>
     <div class="card">
       <div class="hint">标注"双空 2+2"的填空题每空 2 分：第一空多为送分空，第二空才是真难点——考场上第一空务必拿下</div>
@@ -503,6 +527,23 @@
       <div id="yrPanels"></div>
     </div>
   </section>
+
+  <nav id="toc" aria-label="章节目录">
+    <div class="toc-t">目 录</div>
+    <a href="#sec1">一 · 结构演变</a>
+    <a href="#sec2">二 · 模块分布</a>
+    <a href="#sec3">三 · 高频考点</a>
+    <a href="#sec4">四 · 题位图谱</a>
+    <a href="#sec5">五 · 模型词典</a>
+    <a href="#sec6">六 · 难度情境</a>
+    <a href="#sec7">七 · 命题趋势</a>
+    <a href="#sec8">八 · 2026与预测</a>
+    <a href="#sec9">九 · 备考建议</a>
+    <a href="#sec10">十 · 逐题明细</a>
+  </nav>
+  <div id="tocMask"></div>
+  <button id="tocFab" aria-label="打开目录">☰</button>
+  <button id="topBtn" aria-label="回到顶部">↑</button>
 
   <footer>
     <p><b>参考资料：</b>
@@ -721,6 +762,28 @@ tabsEl.addEventListener('click',function(e){
   e.target.classList.add('on');
   document.querySelector('.tab-panel[data-y="'+e.target.dataset.y+'"]').classList.add('on');
 });
+
+/* ================= 目录导航 ================= */
+var tocEl=document.getElementById('toc'),tocFabEl=document.getElementById('tocFab'),tocMaskEl=document.getElementById('tocMask'),topBtnEl=document.getElementById('topBtn');
+if(tocEl&&tocFabEl&&tocMaskEl&&topBtnEl){
+  var tocLinks=[].slice.call(tocEl.querySelectorAll('a'));
+  var tocSecs=tocLinks.map(function(a){return document.getElementById(a.getAttribute('href').slice(1))});
+  var tocToggle=function(open){tocEl.classList[open?'add':'remove']('open');tocMaskEl.classList[open?'add':'remove']('open')};
+  tocFabEl.addEventListener('click',function(){tocToggle(!tocEl.classList.contains('open'))});
+  tocMaskEl.addEventListener('click',function(){tocToggle(false)});
+  tocLinks.forEach(function(a){a.addEventListener('click',function(){ if(window.innerWidth<1620) tocToggle(false) })});
+  topBtnEl.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+  var spyTick=false;
+  var spy=function(){
+    spyTick=false;
+    topBtnEl.classList[(window.scrollY>600)?'add':'remove']('show');
+    var cur=-1;
+    for(var i=0;i<tocSecs.length;i++){ if(tocSecs[i]&&tocSecs[i].getBoundingClientRect().top<=140) cur=i }
+    tocLinks.forEach(function(a,i){a.classList[(i===cur)?'add':'remove']('on')});
+  };
+  window.addEventListener('scroll',function(){ if(!spyTick){spyTick=true;requestAnimationFrame(spy)} },{passive:true});
+  spy();
+}
 </script>
 </body>
 </html>
