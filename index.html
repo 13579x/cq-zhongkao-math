@@ -109,6 +109,31 @@
   footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
   footer a{color:var(--primary);text-decoration:none}
   .nojs{padding:30px;text-align:center;color:var(--muted);font-size:13px}
+
+  /* ---------- 手机端适配 ---------- */
+  @media(max-width:640px){
+    header{padding:38px 16px 80px}
+    h1{font-size:23px}
+    .hd-sub{font-size:13px;margin-top:10px}
+    .hd-tag{font-size:11px;letter-spacing:1px;padding:3px 12px}
+    .wrap{padding:0 12px 48px}
+    .kpis{gap:10px;grid-template-columns:repeat(2,1fr)}
+    .kpi{padding:13px 14px}
+    .kpi b{font-size:20px}
+    section{margin-top:36px}
+    .sec-t h2{font-size:18px;padding-left:11px;border-left-width:4px}
+    .sec-note{margin-left:15px}
+    .card{padding:14px 13px}
+    .chart{height:300px}
+    .chart.tall{height:392px}
+    .chart.xtall{height:470px}
+    table{font-size:12px}
+    th,td{padding:7px 8px}
+    .callout{font-size:13px;padding:12px 13px}
+    .tl-item p{font-size:13px}
+    .adv ul,.band ul{font-size:13px}
+    .tab-btn{padding:5px 14px;font-size:13px}
+  }
 </style>
 </head>
 <body>
@@ -461,119 +486,135 @@ var PAPERS = {
  ,[18,8,'分式化简求值（x=3⁰）',''],[19,10,'统计（桥梁知识竞赛·桥都）','情境'],[20,10,'综合与实践：尺规角平分线＋完整证明 DE=BC−AB','新形式'],[21,10,'一次方程＋分式方程（智能机器人配件）','情境'],[22,10,'矩形双动点函数探究（反比例＋分段一次）','较难'],[23,10,'解直角应用（春秋假景区·动态距离方程）','情境'],[24,10,'二次函数：PD 最大＋胡不归 PE+√2/2·AE＋平移等角','压轴'],[25,10,'几何压轴：等腰直角＋旋转90° · 直线轨迹＋翻折','压轴']]
 };
 
-/* ================= 图表 ================= */
-function mk(id,opt){ var el=document.getElementById(id); if(!window.echarts){el.innerHTML='<div class="nojs">⚠ 图表库加载失败：请联网后刷新页面</div>';return null} var c=echarts.init(el); c.setOption(opt); window.addEventListener('resize',function(){c.resize()}); return c }
+/* ================= 图表（手机端自适应） ================= */
+function isMobile(){ return window.innerWidth<640 }
+var M=isMobile();
+var CHARTS=[];
+function mk(id,builder){
+  var el=document.getElementById(id);
+  if(!window.echarts){el.innerHTML='<div class="nojs">⚠ 图表库加载失败：请联网后刷新页面</div>';return null}
+  var c=echarts.init(el); c.setOption(builder(M));
+  CHARTS.push({c:c,b:builder});
+  return c;
+}
+window.addEventListener('resize',function(){
+  var m2=isMobile();
+  if(m2!==M){ M=m2; CHARTS.forEach(function(x){ x.c.setOption(x.b(M),true) }); }
+  CHARTS.forEach(function(x){ x.c.resize() });
+  if(typeof fitHeatVM==='function') fitHeatVM();
+});
 var C={ind:'#4f46e5',vio:'#7c3aed',cy:'#0891b2',rose:'#e11d48',amber:'#d97706',green:'#059669',grey:'#94a3b8'};
 var baseTxt={fontFamily:'Microsoft YaHei'};
 
 /* 1 结构 */
-mk('c_struct',{
+mk('c_struct',function(M){ return {
   textStyle:baseTxt, tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
-  legend:{data:['选择','填空','解答','总题量'],top:0},
-  grid:{left:44,right:44,top:38,bottom:28},
-  xAxis:{type:'category',data:YEARS,axisLine:{lineStyle:{color:'#cbd5e1'}}},
-  yAxis:[{type:'value',name:'分值',max:150,splitLine:{lineStyle:{color:'#eef2f7'}}},
-         {type:'value',name:'题量',min:20,max:28,splitLine:{show:false}}],
+  legend:{data:['选择','填空','解答','总题量'],top:0,itemWidth:M?14:25,textStyle:{fontSize:M?11:12}},
+  grid:{left:M?36:44,right:M?36:44,top:M?46:38,bottom:24},
+  xAxis:{type:'category',data:YEARS,axisLine:{lineStyle:{color:'#cbd5e1'}},axisLabel:{fontSize:M?10:12}},
+  yAxis:[{type:'value',name:'分值',max:150,splitLine:{lineStyle:{color:'#eef2f7'}},axisLabel:{fontSize:M?10:12}},
+         {type:'value',name:'题量',min:20,max:28,splitLine:{show:false},axisLabel:{fontSize:M?10:12}}],
   series:[
-    {name:'选择',type:'bar',stack:'s',data:STRUCT.sel,barWidth:30,itemStyle:{color:C.ind}},
+    {name:'选择',type:'bar',stack:'s',data:STRUCT.sel,barWidth:M?18:30,itemStyle:{color:C.ind}},
     {name:'填空',type:'bar',stack:'s',data:STRUCT.fill,itemStyle:{color:C.cy}},
     {name:'解答',type:'bar',stack:'s',data:STRUCT.jieda,itemStyle:{color:'#a5b4fc'}},
-    {name:'总题量',type:'line',yAxisIndex:1,data:STRUCT.cnt,symbolSize:9,lineStyle:{width:3,color:C.rose},itemStyle:{color:C.rose},label:{show:true,formatter:'{c}题',color:C.rose,fontSize:11,position:'bottom'}}
+    {name:'总题量',type:'line',yAxisIndex:1,data:STRUCT.cnt,symbolSize:M?7:9,lineStyle:{width:3,color:C.rose},itemStyle:{color:C.rose},label:{show:!M,formatter:'{c}题',color:C.rose,fontSize:11,position:'bottom'}}
   ]
-});
+}});
 
 /* 2 三大领域 */
-mk('c_domain',{
+mk('c_domain',function(M){ return {
   textStyle:baseTxt, tooltip:{trigger:'axis'},
-  legend:{data:['数与代数','图形与几何','统计与概率'],top:0},
-  grid:{left:44,right:20,top:38,bottom:28},
-  xAxis:{type:'category',data:YEARS,boundaryGap:false,axisLine:{lineStyle:{color:'#cbd5e1'}}},
-  yAxis:{type:'value',name:'分值',max:100,splitLine:{lineStyle:{color:'#eef2f7'}}},
+  legend:{data:['数与代数','图形与几何','统计与概率'],top:0,itemWidth:M?14:25,textStyle:{fontSize:M?11:12}},
+  grid:{left:M?34:44,right:M?14:20,top:M?46:38,bottom:24},
+  xAxis:{type:'category',data:YEARS,boundaryGap:false,axisLine:{lineStyle:{color:'#cbd5e1'}},axisLabel:{fontSize:M?10:12}},
+  yAxis:{type:'value',name:'分值',max:100,splitLine:{lineStyle:{color:'#eef2f7'}},axisLabel:{fontSize:M?10:12}},
   series:[
-    {name:'数与代数',type:'line',data:DOMAIN.alg,smooth:true,symbolSize:8,lineStyle:{width:3,color:C.ind},itemStyle:{color:C.ind},areaStyle:{color:'rgba(79,70,229,.10)'},label:{show:true,fontSize:11,color:C.ind}},
-    {name:'图形与几何',type:'line',data:DOMAIN.geo,smooth:true,symbolSize:8,lineStyle:{width:3,color:C.green},itemStyle:{color:C.green},areaStyle:{color:'rgba(5,150,105,.08)'},label:{show:true,fontSize:11,color:C.green}},
-    {name:'统计与概率',type:'line',data:DOMAIN.stat,smooth:true,symbolSize:8,lineStyle:{width:3,color:C.amber},itemStyle:{color:C.amber},label:{show:true,fontSize:11,color:C.amber}}
+    {name:'数与代数',type:'line',data:DOMAIN.alg,smooth:true,symbolSize:M?6:8,lineStyle:{width:3,color:C.ind},itemStyle:{color:C.ind},areaStyle:{color:'rgba(79,70,229,.10)'},label:{show:!M,fontSize:11,color:C.ind}},
+    {name:'图形与几何',type:'line',data:DOMAIN.geo,smooth:true,symbolSize:M?6:8,lineStyle:{width:3,color:C.green},itemStyle:{color:C.green},areaStyle:{color:'rgba(5,150,105,.08)'},label:{show:!M,fontSize:11,color:C.green}},
+    {name:'统计与概率',type:'line',data:DOMAIN.stat,smooth:true,symbolSize:M?6:8,lineStyle:{width:3,color:C.amber},itemStyle:{color:C.amber},label:{show:!M,fontSize:11,color:C.amber}}
   ]
-});
+}});
 
 /* 3 热力图（色条与网格列对齐） */
-var HEAT_L=110, HEAT_R=26;
+function heatL(){ return M?92:110 }
+function heatR(){ return M?12:26 }
 var heatData=[];
 for(var y=0;y<YEARS.length;y++) for(var m=0;m<MODULES.length;m++){
   var v=MOD_YEAR[y][m];
   heatData.push({value:[y,m,v],label:{color:v>=20?'#ffffff':'#1e293b'}});
 }
-var heatChart=mk('c_heat',{
+var heatChart=mk('c_heat',function(M){ return {
   textStyle:baseTxt,
   tooltip:{formatter:function(p){return YEARS[p.value[0]]+' 年 · '+MODULES[p.value[1]]+'：<b>'+p.value[2]+' 分</b>'}},
-  grid:{left:HEAT_L,right:HEAT_R,top:14,bottom:80},
-  xAxis:{type:'category',data:YEARS,splitArea:{show:true},axisLabel:{fontSize:12,margin:12}},
-  yAxis:{type:'category',data:MODULES,inverse:true,splitArea:{show:true},axisLabel:{fontSize:12}},
-  visualMap:{min:4,max:30,calculable:false,orient:'horizontal',left:HEAT_L,bottom:8,itemWidth:12,itemHeight:300,text:['',''],inRange:{color:['#eef2ff','#a5b4fc','#4f46e5','#312e81']}},
-  series:[{type:'heatmap',data:heatData,label:{show:true,fontSize:11.5,fontWeight:600,formatter:function(p){return p.value[2]}},itemStyle:{borderColor:'#fff',borderWidth:2},emphasis:{itemStyle:{shadowBlur:8,shadowColor:'rgba(0,0,0,.25)'}}}]
-});
+  grid:{left:heatL(),right:heatR(),top:12,bottom:M?64:80},
+  xAxis:{type:'category',data:YEARS,splitArea:{show:true},axisLabel:{fontSize:M?9.5:12,margin:M?8:12,interval:0}},
+  yAxis:{type:'category',data:MODULES,inverse:true,splitArea:{show:true},axisLabel:{fontSize:M?10:12}},
+  visualMap:{min:4,max:30,calculable:false,orient:'horizontal',left:heatL(),bottom:M?4:8,itemWidth:M?9:12,itemHeight:300,text:['',''],inRange:{color:['#eef2ff','#a5b4fc','#4f46e5','#312e81']}},
+  series:[{type:'heatmap',data:heatData,label:{show:true,fontSize:M?9.5:11.5,fontWeight:600,formatter:function(p){return p.value[2]}},itemStyle:{borderColor:'#fff',borderWidth:M?1:2},emphasis:{itemStyle:{shadowBlur:8,shadowColor:'rgba(0,0,0,.25)'}}}]
+}});
 function fitHeatVM(){
   if(!heatChart) return;
   var w=heatChart.getWidth();
-  heatChart.setOption({visualMap:{left:HEAT_L,itemHeight:Math.max(120,w-HEAT_L-HEAT_R)}});
+  heatChart.setOption({visualMap:{left:heatL(),itemHeight:Math.max(100,w-heatL()-heatR())}});
 }
-fitHeatVM(); window.addEventListener('resize',fitHeatVM);
+fitHeatVM();
 
 /* 4 高频考点 */
 var fq=FREQ.slice().sort(function(a,b){return a[1]-b[1]});
-mk('c_freq',{
+mk('c_freq',function(M){ return {
   textStyle:baseTxt,
   tooltip:{formatter:function(p){var d=FREQ.find(function(x){return x[0]===p.name});return '<b>'+p.name+'</b><br>六年累计约 '+d[1]+' 分 · 出现 '+d[2]+'/6 年<br><span style="color:#64748b">'+d[3]+'</span>'},confine:true},
-  grid:{left:178,right:80,top:6,bottom:40},
-  xAxis:{type:'value',name:'六年累计分值',nameLocation:'middle',nameGap:26,splitLine:{lineStyle:{color:'#eef2f7'}}},
-  yAxis:{type:'category',data:fq.map(function(d){return d[0]}),axisLabel:{fontSize:12,color:'#334155'}},
-  series:[{type:'bar',data:fq.map(function(d){return {value:d[1],itemStyle:{color:d[2]===6?C.ind:(d[2]===5?C.cy:C.grey),borderRadius:[0,6,6,0]}}}),barWidth:15,
-    label:{show:true,position:'right',fontSize:11,color:'#64748b',formatter:function(p){var d=FREQ.find(function(x){return x[0]===p.name});return d[1]+'分 · '+d[2]+'/6年'}}}]
-});
+  grid:{left:M?118:178,right:M?26:80,top:6,bottom:M?36:40},
+  xAxis:{type:'value',name:M?'累计分值':'六年累计分值',nameLocation:'middle',nameGap:M?22:26,nameTextStyle:{fontSize:M?10:12},splitLine:{lineStyle:{color:'#eef2f7'}},axisLabel:{fontSize:M?10:12}},
+  yAxis:{type:'category',data:fq.map(function(d){return d[0]}),axisLabel:M?{fontSize:10,width:106,overflow:'truncate',color:'#334155'}:{fontSize:12,color:'#334155'}},
+  series:[{type:'bar',data:fq.map(function(d){return {value:d[1],itemStyle:{color:d[2]===6?C.ind:(d[2]===5?C.cy:C.grey),borderRadius:[0,6,6,0]}}}),barWidth:M?11:15,
+    label:{show:!M,position:'right',fontSize:11,color:'#64748b',formatter:function(p){var d=FREQ.find(function(x){return x[0]===p.name});return d[1]+'分 · '+d[2]+'/6年'}}}]
+}});
 
 /* 5 难度 */
-mk('c_diff',{
+mk('c_diff',function(M){ return {
   textStyle:baseTxt, tooltip:{formatter:'{b}：{c} 分（{d}%）'},
-  legend:{bottom:0},
-  series:[{type:'pie',radius:['42%','68%'],center:['50%','46%'],
+  legend:{bottom:0,textStyle:{fontSize:M?11:12},itemWidth:M?14:25},
+  series:[{type:'pie',radius:M?['36%','60%']:['42%','68%'],center:['50%','46%'],
     data:[{name:DIFF[0].name,value:DIFF[0].value,itemStyle:{color:C.green}},
           {name:DIFF[1].name,value:DIFF[1].value,itemStyle:{color:C.amber}},
           {name:DIFF[2].name,value:DIFF[2].value,itemStyle:{color:C.rose}}],
-    label:{formatter:'{b}\n{c}分（{d}%）',fontSize:12},
+    label:{formatter:'{b}\n{c}分（{d}%）',fontSize:M?10.5:12},
     itemStyle:{borderColor:'#fff',borderWidth:3,borderRadius:6}}]
-});
+}});
 
 /* 6 情境 */
-mk('c_ctx',{
+mk('c_ctx',function(M){ return {
   textStyle:baseTxt, tooltip:{trigger:'item'},
-  legend:{bottom:0,textStyle:{fontSize:12}},
+  legend:{bottom:0,textStyle:{fontSize:M?10.5:12},itemWidth:M?14:25},
   series:[
-    {name:'主题',type:'pie',radius:['30%','58%'],center:['50%','44%'],roseType:'radius',
+    {name:'主题',type:'pie',radius:M?['26%','52%']:['30%','58%'],center:['50%','44%'],roseType:'radius',
       data:[{name:'科技强国',value:12,itemStyle:{color:C.ind}},
             {name:'民生经济',value:9,itemStyle:{color:C.cy}},
             {name:'文化时事与校园',value:5,itemStyle:{color:C.rose}},
             {name:'体育健康',value:4,itemStyle:{color:C.green}},
             {name:'生态自然与节约',value:3,itemStyle:{color:C.amber}}],
-      label:{formatter:'{b} {c}道',fontSize:12},
+      label:{formatter:M?'{b}\n{c}道':'{b} {c}道',fontSize:M?10:12},
       itemStyle:{borderColor:'#fff',borderWidth:2,borderRadius:5},
       tooltip:{formatter:'{b}：六年共 {c} 道情境题（{d}%）'}}
   ],
-  graphic:[{type:'text',left:'center',top:'40%',style:{text:'33 道',fontSize:20,fontWeight:'bold',fill:'#1e293b',fontFamily:'Microsoft YaHei'}},
-           {type:'text',left:'center',top:'49%',style:{text:'情境题/6年',fontSize:11,fill:'#94a3b8',fontFamily:'Microsoft YaHei'}}]
-});
+  graphic:[{type:'text',left:'center',top:M?'41%':'40%',style:{text:'33 道',fontSize:M?15:20,fontWeight:'bold',fill:'#1e293b',fontFamily:'Microsoft YaHei'}},
+           {type:'text',left:'center',top:'49%',style:{text:'情境题/6年',fontSize:M?9.5:11,fill:'#94a3b8',fontFamily:'Microsoft YaHei'}}]
+}});
 
 /* 7 2026 vs 五年均值 */
-mk('c_cmp2026',{
+mk('c_cmp2026',function(M){ return {
   textStyle:baseTxt, tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
-  legend:{data:['2021—2025 均值','2026'],top:0},
-  grid:{left:110,right:56,top:40,bottom:44},
-  xAxis:{type:'value',name:'分值',nameLocation:'middle',nameGap:28,splitLine:{lineStyle:{color:'#eef2f7'}}},
-  yAxis:{type:'category',data:MODULES.slice().reverse(),axisLabel:{fontSize:12}},
+  legend:{data:['2021—2025 均值','2026'],top:0,itemWidth:M?14:25,textStyle:{fontSize:M?11:12}},
+  grid:{left:M?92:110,right:M?34:56,top:40,bottom:M?38:44},
+  xAxis:{type:'value',name:'分值',nameLocation:'middle',nameGap:M?24:28,nameTextStyle:{fontSize:M?10:12},splitLine:{lineStyle:{color:'#eef2f7'}},axisLabel:{fontSize:M?10:12}},
+  yAxis:{type:'category',data:MODULES.slice().reverse(),axisLabel:{fontSize:M?10:12}},
   series:[
-    {name:'2021—2025 均值',type:'bar',data:MOD_AVG5.slice().reverse(),barWidth:10,itemStyle:{color:'#c7d2fe',borderRadius:[0,5,5,0]}},
-    {name:'2026',type:'bar',data:MOD_YEAR[5].slice().reverse(),barWidth:10,itemStyle:{color:C.rose,borderRadius:[0,5,5,0]},label:{show:true,position:'right',fontSize:11,color:C.rose}}
+    {name:'2021—2025 均值',type:'bar',data:MOD_AVG5.slice().reverse(),barWidth:M?7:10,itemStyle:{color:'#c7d2fe',borderRadius:[0,5,5,0]}},
+    {name:'2026',type:'bar',data:MOD_YEAR[5].slice().reverse(),barWidth:M?7:10,itemStyle:{color:C.rose,borderRadius:[0,5,5,0]},label:{show:true,position:'right',fontSize:M?9.5:11,color:C.rose}}
   ]
-});
+}});
 
 /* ================= 逐题明细 tabs ================= */
 var tagCls={ '压轴':'red','较难':'amber','重点':'blue','情境':'green','新定义':'red','跨学科':'cyan','新题位':'cyan','新形式':'cyan','文化':'cyan' };
